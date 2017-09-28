@@ -3,51 +3,55 @@ import java.util.Random;
 public class Main {
 
 	public static void main(String[] args) {
-		int[][] matrizOne = new int[1][2];
-		int[][] matrizTwo = new int[2][3];
+		int[][] matriceOne = new int[1][2];
+		int[][] matriceTwo = new int[2][3];
 
-		alimentarMatriz(matrizOne);
-		alimentarMatriz(matrizTwo);
-		imprimirMatriz(matrizOne);
-		System.out.println("");
-		imprimirMatriz(matrizTwo);
-		multiplicarMatrizes(matrizOne, matrizTwo);
-		System.out.println("");
-		imprimirMatriz(multiplicarMatrizes(matrizOne, matrizTwo));
+		feedMatrice(matriceOne);
+		feedMatrice(matriceTwo);
+		// printMatrice(matrizOne);
+		// System.out.println("");
+		// printMatrice(matrizTwo);
+
+		long start = System.nanoTime();
+		matricesMultiplication(matriceOne, matriceTwo);
+		long elapsed = System.nanoTime() - start;
+
+		System.out.println("Tempo gasto em nanosegundos:" + elapsed);
+		// printMatrice(multiplicarMatrizes(matrizOne, matrizTwo));
 	}
 
-	public static void imprimirMatriz(int[][] matriz) {
-		for (int linha = 0; linha < matriz.length; linha++) {
-			for (int coluna = 0; coluna < matriz[0].length; coluna++) {
-				System.out.println(linha + "x" + coluna + ":" + matriz[linha][coluna]);
+	public static void printMatrice(int[][] matrice) {
+		for (int row = 0; row < matrice.length; row++) {
+			for (int column = 0; column < matrice[0].length; column++) {
+				System.out.println(row + "x" + column + ":" + matrice[row][column]);
 			}
 		}
 
 	}
 
-	public static void alimentarMatriz(int[][] matriz) {
-		for (int linha = 0; linha < matriz.length; linha++) {
-			for (int coluna = 0; coluna < matriz[0].length; coluna++) {
+	public static void feedMatrice(int[][] matrice) {
+		for (int row = 0; row < matrice.length; row++) {
+			for (int column = 0; column < matrice[0].length; column++) {
 				Random random = new Random();
-				matriz[linha][coluna] = random.nextInt(11); // números de 0 a 10
+				matrice[row][column] = random.nextInt(11); // numbers from 0 to 10
 			}
 		}
 	}
 
-	public static int[][] multiplicarMatrizes(int[][] matrizOne, int[][] matrizTwo) {
-		int[][] matrizResultante = new int[matrizOne.length][matrizTwo[0].length];
+	public static int[][] matricesMultiplication(int[][] matriceOne, int[][] matriceTwo) {
+		int[][] resultantMatrice = new int[matriceOne.length][matriceTwo[0].length];
 
-		for (int linha = 0; linha < matrizResultante.length; linha++) {
-			for (int coluna = 0; coluna < matrizResultante[0].length; coluna++) {
-				int soma = 0;
-				for (int k = 0; k < matrizOne[0].length; k++) {
-					soma = soma + (matrizOne[linha][k] * matrizTwo[k][coluna]);
+		for (int row = 0; row < resultantMatrice.length; row++) {
+			for (int column = 0; column < resultantMatrice[0].length; column++) {
+				int sum = 0;
+				for (int k = 0; k < matriceOne[0].length; k++) {
+					sum = sum + (matriceOne[row][k] * matriceTwo[k][column]);
 
 				}
-				matrizResultante[linha][coluna] = soma;
+				resultantMatrice[row][column] = sum;
 			}
 		}
 
-		return matrizResultante;
+		return resultantMatrice;
 	}
 }
