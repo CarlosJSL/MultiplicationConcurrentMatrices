@@ -16,8 +16,8 @@ public class Main {
 		matricesMultiplication(matriceOne, matriceTwo);
 		long elapsed = System.nanoTime() - start;
 
-		System.out.println("Tempo gasto em nanosegundos:" + elapsed);
-		// printMatrice(multiplicarMatrizes(matrizOne, matrizTwo));
+		System.out.println("Time spent in nanoseconds:" + elapsed);
+		// printMatrice(matricesMultiplication(matrizOne, matrizTwo));
 	}
 
 	public static void printMatrice(int[][] matrice) {
