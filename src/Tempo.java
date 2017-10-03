@@ -1,4 +1,8 @@
 
+/**
+ * @author Wesley Reuel
+ *
+ */
 public class Tempo {
 	public long tempoInicial;
 	public long tempoFinal;

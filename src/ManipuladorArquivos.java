@@ -14,23 +14,19 @@ public class ManipuladorArquivos {
 		this.baseDir = diretorio + "/";		
 	}
 	
-	//File directory = new File("");
-	//System.out.println(directory.getAbsolutePath());
-	
 	public BufferedReader buffArquivo(String lado, String tam) throws IOException {
-		//final String baseArquivo = "D:\\matrizes\\";
+
 		String nomeArq = baseDir + lado + tam + "x" + tam + ".txt";
-		System.out.println(nomeArq);
+		//System.out.println(nomeArq);
 		FileReader arq = new FileReader(nomeArq);
 		BufferedReader lerArq = new BufferedReader(arq);
 		return lerArq;
 	}
 	
 	public void escreverArquivo(int[][] mat, int lin, int col, Tempo tempoTotal) throws IOException {
-		//final String baseArquivo = "D:\\matrizes\\resultados\\";
 		String nomeArquivo = "C" + lin + "x" + col + ".txt";
 
-		File file = new File(baseDir + "\\resultados" + nomeArquivo);
+		File file = new File(baseDir + nomeArquivo);
 		FileWriter fileWriter = new FileWriter(file);
 
 		Writer writer = new BufferedWriter(fileWriter);
