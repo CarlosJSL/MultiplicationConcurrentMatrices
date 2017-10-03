@@ -1,6 +1,10 @@
 import java.io.BufferedReader;
 import java.io.File;
+import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Hashtable;
+import java.util.List;
 import java.util.Scanner;
 
 public class Concorrente {
@@ -70,7 +74,6 @@ public class Concorrente {
 			buffArq.close();
 			// Fechamento Matriz A
 
-			
 			// ABRINDO ARQUIVO B
 			buffArq = mArquivos.buffArquivo("B", valores[0]);
 			linhaBuff = buffArq.readLine();
@@ -94,40 +97,160 @@ public class Concorrente {
 			mMatrizes.preencheMatriz(matrizBsize.linha, matrizBsize.coluna, matB, buffArq);
 			buffArq.close();
 			// FECHANDO ARQUIVO B
-			
-			
-			
+
 			if (matrizAsize.coluna == matrizBsize.linha) {
 
 				int qtdLinhasPorThreads = matrizAsize.linha / qtdThreads;
-				int resto = matrizAsize.linha % qtdThreads; 
-				ArrayList<PosicaoPorThread> listaPosicao = new ArrayList<PosicaoPorThread>();
-				
+				int resto = matrizAsize.linha % qtdThreads;
+				Hashtable<PosicaoPorThread, ManipuladorMatrizesThread> hashPosicaoThread = new Hashtable<PosicaoPorThread, ManipuladorMatrizesThread>();
+
 				int contadorLinhas = 0;
 				int ultimaPosicao = 0;
-				//divisor de linhas por thread, considerando que cada a última threa ficará com o sua parte e o resto da divisão
-				for(int i = 0; i< qtdThreads;i++){
+				// divisor de linhas por thread, considerando que cada a última
+				// threa ficará com o sua parte e o resto da divisão
+				int contadorThreads = 0;
+				int finalPosical = 0;
+				while(contadorThreads != qtdThreads){
+					
 					contadorLinhas++;
-					if((contadorLinhas == qtdLinhasPorThreads) ){
-						PosicaoPorThread add = new PosicaoPorThread();
-						add.setStart(ultimaPosicao);
-						add.setEnd(i);
-						if(resto > 0 && i == qtdThreads-1){
-							add.setEnd(i+resto);
+					if ((contadorLinhas == qtdLinhasPorThreads)) {
+						contadorThreads++;
+						PosicaoPorThread addPosicao = new PosicaoPorThread();
+						addPosicao.setStart(ultimaPosicao);
+						addPosicao.setEnd(finalPosical);
+						if (resto > 0 && contadorThreads == qtdThreads) {
+							addPosicao.setEnd(finalPosical + resto);
 						}
-						ultimaPosicao = i+1;
-						listaPosicao.add(add);
+
+						ManipuladorMatrizesThread addThread = new ManipuladorMatrizesThread();
+						addThread.setColA(matrizAsize.coluna);
+						addThread.setColB(matrizBsize.coluna);
+						addThread.setLinA(matrizAsize.linha);
+						addThread.setLinB(matrizBsize.linha);
+						addThread.setMatA(matA);
+						addThread.setMatB(matB);
+						addThread.setPosicao(addPosicao);
+						
+
+						hashPosicaoThread.put(addPosicao, addThread);
+						System.out.println(
+								"Thread para posicao " + addPosicao.start + " Até posicao " + addPosicao.end);
+
+						ultimaPosicao = finalPosical + 1;
 						contadorLinhas = 0;
 					}
+					finalPosical++;
 				}
 				
-				//matrizThreads = new int[qtdThreads][matrizAsize.linha][matrizBsize.coluna];
-				//ArrayList<ManipuladorMatrizesThread> matrizesThreads = new ArrayList<ManipuladorMatrizesThread>();
+				
+				
+				
+				
+				
+				
+				/*
+
+					for (int i = 0; i < qtdThreads; i++) {
+						contadorLinhas++;
+						if ((contadorLinhas == qtdLinhasPorThreads)) {
+							PosicaoPorThread addPosicao = new PosicaoPorThread();
+							addPosicao.setStart(ultimaPosicao);
+							addPosicao.setEnd(i);
+							if (resto > 0 && i == qtdThreads - 1) {
+								addPosicao.setEnd(i + resto);
+							}
+
+							ManipuladorMatrizesThread addThread = new ManipuladorMatrizesThread();
+							addThread.setColA(matrizAsize.coluna);
+							addThread.setColB(matrizBsize.coluna);
+							addThread.setLinA(matrizAsize.linha);
+							addThread.setLinB(matrizBsize.linha);
+							addThread.setMatA(matA);
+							addThread.setMatB(matB);
+							addThread.setPosicao(addPosicao);
+
+							hashPosicaoThread.put(addPosicao, addThread);
+							System.out.println(
+									"Thread para posicao " + addPosicao.start + " Até posicao " + addPosicao.end);
+
+							ultimaPosicao = i + 1;
+							contadorLinhas = 0;
+						}
+					}
+				*/
+
+				for (PosicaoPorThread key : hashPosicaoThread.keySet()) {
+					hashPosicaoThread.get(key).run();
+					hashPosicaoThread.get(key).join();
+				}
+
+				System.out.println("Terminei de processar");
+
+				for (PosicaoPorThread key : hashPosicaoThread.keySet()) {
+					int[][] mat = hashPosicaoThread.get(key).getMatResultado();
+					mMatrizes.juntarMatrizesPorPosicao(mat, key, matrizAsize.linha, matrizBsize.coluna);
+				}
+
+				System.out.println("Terminei a junção");
+
+				mMatrizes.imprimeMatriz(mMatrizes.getMatrizResultado(), matrizAsize.linha, matrizBsize.coluna);
+				mArquivos.escreverArquivo(mMatrizes.getMatrizResultado(),  matrizAsize.linha, matrizBsize.coluna, tempo);
+				//tempo.tempoFinal = System.nanoTime();
+				
+				System.out.println("O Tempo total de execuçao foi de: " + tempo.getTempTotal());
 
 				
 				
-				
-				
+				/*
+				 * ArrayList<PosicaoPorThread> listaPosicao = new
+				 * ArrayList<PosicaoPorThread>();
+				 * 
+				 * int contadorLinhas = 0; int ultimaPosicao = 0; //divisor de
+				 * linhas por thread, considerando que cada a última threa
+				 * ficará com o sua parte e o resto da divisão for(int i = 0; i<
+				 * qtdThreads;i++){ contadorLinhas++; if((contadorLinhas ==
+				 * qtdLinhasPorThreads) ){ PosicaoPorThread add = new
+				 * PosicaoPorThread(); add.setStart(ultimaPosicao);
+				 * add.setEnd(i); if(resto > 0 && i == qtdThreads-1){
+				 * add.setEnd(i+resto); } ultimaPosicao = i+1;
+				 * listaPosicao.add(add); contadorLinhas = 0; } }
+				 * 
+				 * ArrayList<ManipuladorMatrizesThread> matrizesThreads = new
+				 * ArrayList<ManipuladorMatrizesThread>(); for (PosicaoPorThread
+				 * posicaoPorThread : listaPosicao) { ManipuladorMatrizesThread
+				 * add = new ManipuladorMatrizesThread();
+				 * add.setColA(matrizAsize.coluna);
+				 * add.setColB(matrizBsize.coluna);
+				 * add.setLinA(matrizAsize.linha);
+				 * add.setLinB(matrizBsize.linha); add.setMatA(matA);
+				 * add.setMatB(matB); add.setPosicao(posicaoPorThread);
+				 * matrizesThreads.add(add); }
+				 * 
+				 * for (ManipuladorMatrizesThread manipuladorMatrizesThread :
+				 * matrizesThreads) { manipuladorMatrizesThread.start();
+				 * manipuladorMatrizesThread.join(); } System.out.println(
+				 * "multiplicação terminada");
+				 * 
+				 * 
+				 * 
+				 * 
+				 * for(int i = 0; i<listaPosicao.size(); i++){
+				 * mMatrizes.juntarMatrizesPorPosicao(manipuladorMatrizesThread[
+				 * i]., posicao, contadorLinhas, col); }
+				 * 
+				 * 
+				 * for (ManipuladorMatrizesThread manipuladorMatrizesThread :
+				 * matrizesThreads) { mMatrizes.juntarMatrizesPorPosicao(matA,
+				 * posicao, contadorLinhas, col);
+				 * 
+				 * }
+				 */
+
+				// matrizThreads = new
+				// int[qtdThreads][matrizAsize.linha][matrizBsize.coluna];
+				// ArrayList<ManipuladorMatrizesThread> matrizesThreads = new
+				// ArrayList<ManipuladorMatrizesThread>();
+
 			}
 
 		} catch (Exception e) {
@@ -137,5 +260,3 @@ public class Concorrente {
 	}
 
 }
-
-

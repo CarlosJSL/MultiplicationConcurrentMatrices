@@ -8,11 +8,15 @@ public class ManipuladorMatrizesThread extends Thread {
 	protected int linA;
 	protected int colB;
 	protected int linB;
+	protected PosicaoPorThread posicao;
 	protected boolean par;
 	
+	public ManipuladorMatrizesThread(){
+		
+	}
 
 	
-	public ManipuladorMatrizesThread(int[][] matA, int[][] matB, int colA, int linA, int colB, int linB, boolean tipo) {
+	public ManipuladorMatrizesThread(int[][] matA, int[][] matB, int colA, int linA, int colB, int linB, PosicaoPorThread pos) {
 		super();
 		this.matA = matA;
 		this.matB = matB;
@@ -20,14 +24,29 @@ public class ManipuladorMatrizesThread extends Thread {
 		this.linA = linA;
 		this.colB = colB;
 		this.linB = linB;
-		this.par = tipo;
+		this.posicao = pos;
+		//this.par = tipo;
 	}
 	
 	@Override
 	public void run() {
-		this.matResultado = new int[colA][linB];
+		this.matResultado = new int[linA][colB];
 		int soma = 0;
-		for (int i = 0; i < linA; i++) {
+		
+		for(int i = 0; i<linA; i++){
+			if(i >= posicao.start && i <= posicao.end  ){
+				for (int j = 0; j < colB; j++) {
+					for (int x = 0; x < colA; x++) {
+						soma += matA[i][x] * matB[x][j];
+					}
+					this.matResultado[i][j] = soma;
+					soma = 0;
+				}	
+			}
+		}
+		
+		
+		/*for (int i = 0; i < linA; i++) {
 			if(par && (i == 0 || i%2 == 0)){
 				for (int j = 0; j < colB; j++) {
 					for (int x = 0; x < colA; x++) {
@@ -46,7 +65,9 @@ public class ManipuladorMatrizesThread extends Thread {
 					soma = 0;
 				}	
 			}
-		}		
+		}*/
+		
+		
 	}
 
 
@@ -123,6 +144,8 @@ public class ManipuladorMatrizesThread extends Thread {
 	public void setMatResultado(int[][] matResultado) {
 		this.matResultado = matResultado;
 	}
+	
+	
 
 /*	public int[][] multiplicarImpares(int[][] matA, int[][] matB, int linA, int colA, int linB, int colB) {
 		int[][] matC = new int[colA][linB];
@@ -142,6 +165,16 @@ public class ManipuladorMatrizesThread extends Thread {
 	} */
 	
 	
+	public PosicaoPorThread getPosicao() {
+		return posicao;
+	}
+
+
+	public void setPosicao(PosicaoPorThread posicao) {
+		this.posicao = posicao;
+	}
+
+
 	public int[][] juntarMatrizes(int[][] matPar, int[][] matImpar, int lin, int col){
 		int[][] matResultadoFinal = new int[lin][col];
 		for(int i = 0; i < lin; i++){

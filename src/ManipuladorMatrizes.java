@@ -2,9 +2,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 
 public class ManipuladorMatrizes {
-	
+
+	int[][] matrizResultado;
+
 	public int[][] multiplicar(int[][] matA, int[][] matB, int linA, int colA, int linB, int colB) {
-		int[][] matC = new int[colA][linB];
+		int[][] matC = new int[linA][colB];
 		int soma = 0;
 		for (int i = 0; i < linA; i++) {
 			for (int j = 0; j < colB; j++) {
@@ -17,7 +19,7 @@ public class ManipuladorMatrizes {
 		}
 		return matC;
 	}
-	
+
 	public void imprimeMatriz(int[][] matrizImprimir, int linha, int coluna) {
 		for (int i = 0; i < linha; i++) {
 			for (int j = 0; j < coluna; j++) {
@@ -27,7 +29,7 @@ public class ManipuladorMatrizes {
 		}
 
 	}
-	
+
 	public void preencheMatriz(int lin, int col, int[][] matA, BufferedReader lerArq) throws IOException {
 		String linha;
 		String[] valores;
@@ -39,22 +41,42 @@ public class ManipuladorMatrizes {
 			}
 		}
 	}
-	
-	public int[][] juntarMatrizes(int[][] matPar, int[][] matImpar, int lin, int col){
+
+	public int[][] juntarMatrizes(int[][] matPar, int[][] matImpar, int lin, int col) {
 		int[][] matResultadoFinal = new int[lin][col];
-		for(int i = 0; i < lin; i++){
-			for(int j = 0; j<col; j++){
-				if(i==0 || i %2==0){
+		for (int i = 0; i < lin; i++) {
+			for (int j = 0; j < col; j++) {
+				if (i == 0 || i % 2 == 0) {
 					matResultadoFinal[i][j] = matPar[i][j];
-				}
-				else {
+				} else {
 					matResultadoFinal[i][j] = matImpar[i][j];
 				}
 			}
 		}
-		
-		
+
 		return matResultadoFinal;
 	}
+
+	public void juntarMatrizesPorPosicao(int[][] matA, PosicaoPorThread posicao, int lin, int col) {
+		if(this.matrizResultado == null){
+			matrizResultado = new int[lin][col];	
+		}
+		
+		for(int i = 0; i<lin; i++){
+			if(i >= posicao.start && i <= posicao.end  ){
+				for (int j = 0; j < col; j++) {
+					this.matrizResultado[i][j] = matA[i][j] ;
+				}	
+			}
+		}
+	}
+
+	public int[][] getMatrizResultado() {
+		return matrizResultado;
+	}
+
+	
+	
+	
 
 }
