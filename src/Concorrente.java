@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Concorrente {
 
-	public static void main(String[] args)  {
+	public static void main(String[] args) {
 		Tempo tempo = new Tempo();
 		tempo.tempoInicial = System.nanoTime();
 
@@ -19,7 +19,7 @@ public class Concorrente {
 		Scanner ler = new Scanner(System.in);
 		valores = ler.nextLine().split("");
 
-		if (valores.length != 3) {
+		if (valores.length != 3 || Character.isLetter(valores[0].charAt(0)) || Character.isLetter(valores[2].charAt(0))) {
 			throw new Error("Entrada invalida, e necessario dois valores numericos");
 		}
 
@@ -36,7 +36,6 @@ public class Concorrente {
 		int[][] matrizA = mMatrizes.CriarEPreencherMatriz(nomeDoArquivoDaPrimeiraMatriz);
 		int[][] matrizB = mMatrizes.CriarEPreencherMatriz(nomeDoArquivoDaSegundaMatriz);
 
-		
 		if (matrizA[0].length == matrizB.length) {
 
 			int qtdLinhasPorThreads = matrizA.length / qtdThreads;
@@ -79,14 +78,13 @@ public class Concorrente {
 				finalPosicao++;
 			}
 
-			
 			try {
 				for (PosicaoPorThread key : hashPosicaoThread.keySet()) {
 					hashPosicaoThread.get(key).run();
 					hashPosicaoThread.get(key).join();
 				}
 			} catch (InterruptedException e) {
-				System.err.println("Erro na sincronização: " +  e.getMessage());
+				System.err.println("Erro na sincronizaï¿½ï¿½o: " + e.getMessage());
 			}
 
 			for (PosicaoPorThread key : hashPosicaoThread.keySet()) {
