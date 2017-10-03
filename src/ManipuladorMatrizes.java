@@ -1,5 +1,4 @@
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -28,7 +27,6 @@ public class ManipuladorMatrizes {
 			for (int j = 0; j < matrizImprimir[0].length; j++) {
 				System.out.print(matrizImprimir[i][j] + " ");
 			}
-			System.out.println();
 		}
 	}
 

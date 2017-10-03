@@ -1,5 +1,4 @@
 import java.io.File;
-import java.util.Scanner;
 
 public class Sequencial {
 
@@ -12,12 +11,10 @@ public class Sequencial {
 
 		ManipuladorArquivos mArquivos = new ManipuladorArquivos(diretorio);
 		ManipuladorMatrizes mMatrizes = new ManipuladorMatrizes();
+		
 
-		Scanner ler = new Scanner(System.in);
-		String tamanho = ler.nextLine();
-
-		String nomeDoArquivoDaPrimeiraMatriz = diretorio + "/A" + tamanho + "x" + tamanho + ".txt";
-		String nomeDoArquivoDaSegundaMatriz = diretorio + "/B" + tamanho + "x" + tamanho + ".txt";
+		String nomeDoArquivoDaPrimeiraMatriz = diretorio + "/A" + args[0] + "x" + args[0] + ".txt";
+		String nomeDoArquivoDaSegundaMatriz = diretorio + "/B" + args[0] + "x" + args[0] + ".txt";
 
 		int[][] matrizA = mMatrizes.CriarEPreencherMatriz(nomeDoArquivoDaPrimeiraMatriz);
 		int[][] matrizB = mMatrizes.CriarEPreencherMatriz(nomeDoArquivoDaSegundaMatriz);

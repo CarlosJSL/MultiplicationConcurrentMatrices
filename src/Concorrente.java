@@ -1,6 +1,5 @@
 import java.io.File;
 import java.util.Hashtable;
-import java.util.Scanner;
 
 public class Concorrente {
 
@@ -16,15 +15,16 @@ public class Concorrente {
 		ManipuladorArquivos mArquivos = new ManipuladorArquivos(diretorio);
 		ManipuladorMatrizes mMatrizes = new ManipuladorMatrizes();
 
-		Scanner ler = new Scanner(System.in);
-		valores = ler.nextLine().split("");
-
-		if (valores.length != 3 || Character.isLetter(valores[0].charAt(0)) || Character.isLetter(valores[2].charAt(0))) {
+		System.out.println(args[0]);
+		System.out.println(args[1]);
+		
+		
+		if (args.length != 2 || Character.isLetter(args[0].charAt(0)) || Character.isLetter(args[1].charAt(0))) {
 			throw new Error("Entrada invalida, e necessario dois valores numericos");
 		}
 
-		int tamanho = Integer.parseInt(valores[0]);
-		int qtdThreads = Integer.parseInt(valores[2]);
+		int tamanho = Integer.parseInt(args[0]);
+		int qtdThreads = Integer.parseInt(args[1]);
 
 		if (qtdThreads > tamanho) {
 			throw new Error("A quantidade de Threads n�o pode ser maior que quantidade de linhas");
@@ -44,10 +44,9 @@ public class Concorrente {
 
 			int contadorLinhas = 0;
 			int ultimaPosicao = 0;
-			// divisor de linhas por thread, considerando que cada a �ltima
-			// threa ficar� com o sua parte e o resto da divis�o
 			int contadorThreads = 0;
 			int finalPosicao = 0;
+			
 			while (contadorThreads != qtdThreads) {
 
 				contadorLinhas++;
