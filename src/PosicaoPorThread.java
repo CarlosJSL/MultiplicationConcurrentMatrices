@@ -2,17 +2,13 @@
 public class PosicaoPorThread {
 	int start;
 	int end;
-	
+
 	public PosicaoPorThread() {
-	
+
 	}
-	
-	/**
-	 * @param start
-	 * @param end
-	 */
+
 	public PosicaoPorThread(int start, int end) {
-	
+
 		this.start = start;
 		this.end = end;
 	}
@@ -34,4 +30,3 @@ public class PosicaoPorThread {
 	}
 
 }
-

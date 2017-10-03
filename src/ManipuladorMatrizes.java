@@ -1,16 +1,19 @@
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 
 public class ManipuladorMatrizes {
 
 	int[][] matrizResultado;
 
-	public int[][] multiplicar(int[][] matA, int[][] matB, int linA, int colA, int linB, int colB) {
-		int[][] matC = new int[linA][colB];
+	public int[][] multiplicar(int[][] matA, int[][] matB) {
+
+		int[][] matC = new int[matA.length][matB[0].length];
 		int soma = 0;
-		for (int i = 0; i < linA; i++) {
-			for (int j = 0; j < colB; j++) {
-				for (int x = 0; x < colA; x++) {
+		for (int i = 0; i < matA.length; i++) {
+			for (int j = 0; j < matB[0].length; j++) {
+				for (int x = 0; x < matA[0].length; x++) {
 					soma += matA[i][x] * matB[x][j];
 				}
 				matC[i][j] = soma;
@@ -20,53 +23,52 @@ public class ManipuladorMatrizes {
 		return matC;
 	}
 
-	public void imprimeMatriz(int[][] matrizImprimir, int linha, int coluna) {
-		for (int i = 0; i < linha; i++) {
-			for (int j = 0; j < coluna; j++) {
+	public void imprimeMatriz(int[][] matrizImprimir) {
+		for (int i = 0; i < matrizImprimir.length; i++) {
+			for (int j = 0; j < matrizImprimir[0].length; j++) {
 				System.out.print(matrizImprimir[i][j] + " ");
 			}
 			System.out.println();
 		}
-
 	}
 
-	public void preencheMatriz(int lin, int col, int[][] matA, BufferedReader lerArq) throws IOException {
-		String linha;
+	public int[][] CriarEPreencherMatriz(String nomeDoArquivoASerLido) {
 		String[] valores;
-		for (int i = 0; i < lin; i++) {
-			linha = lerArq.readLine();
-			valores = linha.split(" ");
-			for (int j = 0; j < col; j++) {
-				matA[i][j] = Integer.parseInt(valores[j]);
-			}
-		}
-	}
+		try {
+			FileReader arquivo = new FileReader(nomeDoArquivoASerLido);
+			BufferedReader arquivoSendoLido = new BufferedReader(arquivo);
 
-	public int[][] juntarMatrizes(int[][] matPar, int[][] matImpar, int lin, int col) {
-		int[][] matResultadoFinal = new int[lin][col];
-		for (int i = 0; i < lin; i++) {
-			for (int j = 0; j < col; j++) {
-				if (i == 0 || i % 2 == 0) {
-					matResultadoFinal[i][j] = matPar[i][j];
-				} else {
-					matResultadoFinal[i][j] = matImpar[i][j];
+			String linhaDoArquivo = arquivoSendoLido.readLine();
+
+			int linhaMatrizA = Integer.parseInt(linhaDoArquivo.substring(0, 1));
+			int colunaMatrizA = Integer.parseInt(linhaDoArquivo.substring(2));
+
+			int[][] matrizA = new int[linhaMatrizA][colunaMatrizA];
+
+			for (int i = 0; i < matrizA.length; i++) {
+				valores = arquivoSendoLido.readLine().split(" ");
+				for (int j = 0; j < matrizA[0].length; j++) {
+					matrizA[i][j] = Integer.parseInt(valores[j]);
 				}
 			}
+			arquivoSendoLido.close();
+			return matrizA;
+		} catch (IOException e) {
+			System.err.printf("Erro na abertura do arquivo: %s.\n", e.getMessage());
 		}
-
-		return matResultadoFinal;
+		return null;
 	}
 
-	public void juntarMatrizesPorPosicao(int[][] matA, PosicaoPorThread posicao, int lin, int col) {
-		if(this.matrizResultado == null){
-			matrizResultado = new int[lin][col];	
+	public void juntarMatrizesPorPosicao(int[][] matA, PosicaoPorThread posicao, int[][] matriz) {
+		if (this.matrizResultado == null) {
+			matrizResultado = new int[matriz.length][matriz[0].length];
 		}
-		
-		for(int i = 0; i<lin; i++){
-			if(i >= posicao.start && i <= posicao.end  ){
-				for (int j = 0; j < col; j++) {
-					this.matrizResultado[i][j] = matA[i][j] ;
-				}	
+
+		for (int i = 0; i < matriz.length; i++) {
+			if (i >= posicao.start && i <= posicao.end) {
+				for (int j = 0; j < matriz[0].length; j++) {
+					this.matrizResultado[i][j] = matA[i][j];
+				}
 			}
 		}
 	}
@@ -74,9 +76,5 @@ public class ManipuladorMatrizes {
 	public int[][] getMatrizResultado() {
 		return matrizResultado;
 	}
-
-	
-	
-	
 
 }
