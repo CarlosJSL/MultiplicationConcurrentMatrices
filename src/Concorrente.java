@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Concorrente {
 
-	public static void main(String[] args) throws InterruptedException {
+	public static void main(String[] args)  {
 		Tempo tempo = new Tempo();
 		tempo.tempoInicial = System.nanoTime();
 
@@ -36,6 +36,7 @@ public class Concorrente {
 		int[][] matrizA = mMatrizes.CriarEPreencherMatriz(nomeDoArquivoDaPrimeiraMatriz);
 		int[][] matrizB = mMatrizes.CriarEPreencherMatriz(nomeDoArquivoDaSegundaMatriz);
 
+		
 		if (matrizA[0].length == matrizB.length) {
 
 			int qtdLinhasPorThreads = matrizA.length / qtdThreads;
@@ -78,9 +79,14 @@ public class Concorrente {
 				finalPosicao++;
 			}
 
-			for (PosicaoPorThread key : hashPosicaoThread.keySet()) {
-				hashPosicaoThread.get(key).run();
-				hashPosicaoThread.get(key).join();
+			
+			try {
+				for (PosicaoPorThread key : hashPosicaoThread.keySet()) {
+					hashPosicaoThread.get(key).run();
+					hashPosicaoThread.get(key).join();
+				}
+			} catch (InterruptedException e) {
+				System.err.println("Erro na sincronização: " +  e.getMessage());
 			}
 
 			for (PosicaoPorThread key : hashPosicaoThread.keySet()) {

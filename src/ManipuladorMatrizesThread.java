@@ -110,7 +110,7 @@ public class ManipuladorMatrizesThread extends Thread {
 
 	}
 
-	public int[][] juntarMatrizes(int[][] matPar, int[][] matImpar, int lin, int col) {
+	/*public int[][] juntarMatrizes(int[][] matPar, int[][] matImpar, int lin, int col) {
 		int[][] matResultadoFinal = new int[lin][col];
 		for (int i = 0; i < lin; i++) {
 			for (int j = 0; j < col; j++) {
@@ -123,6 +123,6 @@ public class ManipuladorMatrizesThread extends Thread {
 		}
 
 		return matResultadoFinal;
-	}
+	}*/
 
 }
