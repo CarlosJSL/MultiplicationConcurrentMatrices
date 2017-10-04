@@ -56,12 +56,12 @@ public class ManipuladorMatrizes {
 		return null;
 	}
 
-	public void juntarMatrizesPorPosicao(int[][] matA, PosicaoPorThread posicao, int[][] matriz) {
+	public void juntarMatrizesPorIntervalo(int[][] matA, IntervaloLinhas posicao, int[][] matriz) {
 		if (this.matrizResultado == null) {
 			matrizResultado = new int[matriz.length][matriz[0].length];
 		}
 
-		for (int i = posicao.start; i <= posicao.end; i++) {
+		for (int i = posicao.inicio; i <= posicao.fim; i++) {
 			//if (i >= posicao.start && i <= posicao.end) {
 				for (int j = 0; j < matriz[0].length; j++) {
 					this.matrizResultado[i][j] = matA[i][j];
@@ -73,5 +73,7 @@ public class ManipuladorMatrizes {
 	public int[][] getMatrizResultado() {
 		return matrizResultado;
 	}
+	
+	
 
 }

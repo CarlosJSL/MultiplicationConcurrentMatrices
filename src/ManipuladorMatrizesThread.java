@@ -8,7 +8,7 @@ public class ManipuladorMatrizesThread extends Thread {
 	protected int linA;
 	protected int colB;
 	protected int linB;
-	protected PosicaoPorThread posicao;
+	protected IntervaloLinhas posicao;
 	protected boolean par;
 
 	public int[][] getMatA() {
@@ -67,11 +67,11 @@ public class ManipuladorMatrizesThread extends Thread {
 		this.matResultado = matResultado;
 	}
 
-	public PosicaoPorThread getPosicao() {
+	public IntervaloLinhas getPosicao() {
 		return posicao;
 	}
 
-	public void setPosicao(PosicaoPorThread posicao) {
+	public void setPosicao(IntervaloLinhas posicao) {
 		this.posicao = posicao;
 	}
 
@@ -79,15 +79,13 @@ public class ManipuladorMatrizesThread extends Thread {
 
 	}
 
-	public ManipuladorMatrizesThread(int[][] matA, int[][] matB, int colA, int linA, int colB, int linB,
-			PosicaoPorThread pos) {
-		super();
+	public ManipuladorMatrizesThread(int[][] matA, int[][] matB, IntervaloLinhas pos) {
 		this.matA = matA;
 		this.matB = matB;
-		this.colA = colA;
-		this.linA = linA;
-		this.colB = colB;
-		this.linB = linB;
+		this.colA = matA[0].length;
+		this.linA = matA.length;
+		this.colB = matB[0].length;
+		this.linB = matB.length;
 		this.posicao = pos;
 	}
 
@@ -96,7 +94,7 @@ public class ManipuladorMatrizesThread extends Thread {
 		this.matResultado = new int[linA][colB];
 		int soma = 0;
 
-		for (int i = posicao.start; i <= posicao.end; i++) {
+		for (int i = posicao.inicio; i <= posicao.fim; i++) {
 			//if (i >= posicao.start && i <= posicao.end) {
 			for (int j = 0; j < colB; j++) {
 				for (int x = 0; x < colA; x++) {
@@ -109,5 +107,7 @@ public class ManipuladorMatrizesThread extends Thread {
 		}
 
 	}
+	
+	
 
 }

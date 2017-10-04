@@ -3,21 +3,13 @@ import java.util.Hashtable;
 
 public class Concorrente {
 
-	public static void main(String[] args) {
-		Tempo tempo = new Tempo();
-		tempo.tempoInicial = System.nanoTime();
-
-		String[] valores;
+	public void executar(String[] args, Tempo tempo) {
 
 		File directory = new File("");
 		final String diretorio = directory.getAbsolutePath().toString();
 
 		ManipuladorArquivos mArquivos = new ManipuladorArquivos(diretorio);
 		ManipuladorMatrizes mMatrizes = new ManipuladorMatrizes();
-
-		if (args.length != 2 || Character.isLetter(args[0].charAt(0)) || Character.isLetter(args[1].charAt(0))) {
-			throw new Error("Entrada invalida, e necessario dois valores numericos");
-		}
 
 		int tamanho = Integer.parseInt(args[0]);
 		int qtdThreads = Integer.parseInt(args[1]);
@@ -36,54 +28,21 @@ public class Concorrente {
 
 			int qtdLinhasPorThreads = matrizA.length / qtdThreads;
 			int resto = matrizA.length % qtdThreads;
-			Hashtable<PosicaoPorThread, ManipuladorMatrizesThread> hashPosicaoThread = new Hashtable<PosicaoPorThread, ManipuladorMatrizesThread>();
-
-			int contadorLinhas = 0;
-			int ultimaPosicao = 0;
-			int contadorThreads = 0;
-			int finalPosicao = 0;
-
-			while (contadorThreads != qtdThreads) {
-
-				contadorLinhas++;
-				if (contadorLinhas == qtdLinhasPorThreads) {
-					contadorThreads++;
-					PosicaoPorThread addPosicao = new PosicaoPorThread();
-					addPosicao.setStart(ultimaPosicao);
-					addPosicao.setEnd(finalPosicao);
-					if (resto > 0 && contadorThreads == qtdThreads) {
-						addPosicao.setEnd(finalPosicao + resto);
-					}
-
-					ManipuladorMatrizesThread addThread = new ManipuladorMatrizesThread();
-					addThread.setColA(matrizA[0].length);
-					addThread.setColB(matrizB[0].length);
-					addThread.setLinA(matrizA.length);
-					addThread.setLinB(matrizB.length);
-					addThread.setMatA(matrizA);
-					addThread.setMatB(matrizB);
-					addThread.setPosicao(addPosicao);
-
-					hashPosicaoThread.put(addPosicao, addThread);
-
-					ultimaPosicao = finalPosicao + 1;
-					contadorLinhas = 0;
-				}
-				finalPosicao++;
-			}
+			Hashtable<IntervaloLinhas, ManipuladorMatrizesThread> hashIntervaloThread = criarHasthTableThread(
+					qtdThreads, matrizA, matrizB, qtdLinhasPorThreads, resto);
 
 			try {
-				for (PosicaoPorThread key : hashPosicaoThread.keySet()) {
-					hashPosicaoThread.get(key).run();
-					hashPosicaoThread.get(key).join();
+				for (IntervaloLinhas key : hashIntervaloThread.keySet()) {
+					hashIntervaloThread.get(key).run();
+					hashIntervaloThread.get(key).join();
 				}
 			} catch (InterruptedException e) {
 				System.err.println("Erro na sincroniza��o: " + e.getMessage());
 			}
 
-			for (PosicaoPorThread key : hashPosicaoThread.keySet()) {
-				int[][] mat = hashPosicaoThread.get(key).getMatResultado();
-				mMatrizes.juntarMatrizesPorPosicao(mat, key, matrizA);
+			for (IntervaloLinhas key : hashIntervaloThread.keySet()) {
+				int[][] mat = hashIntervaloThread.get(key).getMatResultado();
+				mMatrizes.juntarMatrizesPorIntervalo(mat, key, matrizA);
 			}
 
 			mArquivos.escreverArquivo(mMatrizes.getMatrizResultado(), tempo);
@@ -92,4 +51,45 @@ public class Concorrente {
 			throw new Error("Não é possivel multiplicar essas matrizes!");
 		}
 	}
+
+	private static Hashtable<IntervaloLinhas, ManipuladorMatrizesThread> criarHasthTableThread(int qtdThreads,
+			int[][] matrizA, int[][] matrizB, int qtdLinhasPorThreads, int resto) {
+		Hashtable<IntervaloLinhas, ManipuladorMatrizesThread> hashIntervaloThread = new Hashtable<IntervaloLinhas, ManipuladorMatrizesThread>();
+
+		int contadorLinhas = 0;
+		int ultimaPosicaoIntervalo = 0;
+		int contadorThreads = 0;
+		int finalPosicaoIntervalo = 0;
+
+		while (contadorThreads != qtdThreads) {
+
+			contadorLinhas++;
+			if (contadorLinhas == qtdLinhasPorThreads) {
+				contadorThreads++;
+				IntervaloLinhas addIntervalo = criarIntervaloLinhas(qtdThreads, resto, ultimaPosicaoIntervalo,
+						contadorThreads, finalPosicaoIntervalo);
+
+				ManipuladorMatrizesThread addThread = new ManipuladorMatrizesThread(matrizA, matrizB, addIntervalo);
+
+				hashIntervaloThread.put(addIntervalo, addThread);
+
+				ultimaPosicaoIntervalo = finalPosicaoIntervalo + 1;
+				contadorLinhas = 0;
+			}
+			finalPosicaoIntervalo++;
+		}
+		return hashIntervaloThread;
+	}
+
+	private static IntervaloLinhas criarIntervaloLinhas(int qtdThreads, int resto, int ultimaPosicao,
+			int contadorThreads, int finalPosicao) {
+		IntervaloLinhas intervaloLinhas = new IntervaloLinhas();
+		intervaloLinhas.setInicio(ultimaPosicao);
+		intervaloLinhas.setFim(finalPosicao);
+		if (resto > 0 && contadorThreads == qtdThreads) {
+			intervaloLinhas.setFim(finalPosicao + resto);
+		}
+		return intervaloLinhas;
+	}
+
 }

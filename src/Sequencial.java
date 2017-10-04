@@ -2,9 +2,7 @@ import java.io.File;
 
 public class Sequencial {
 
-	public static void main(String[] args) {
-		Tempo tempo = new Tempo();
-		tempo.tempoInicial = System.nanoTime();
+	public void executar(String[] args, Tempo tempo) {
 		File directory = new File("");
 		final String diretorio = directory.getAbsolutePath().toString();
 
@@ -23,7 +21,6 @@ public class Sequencial {
 			int[][] matrizResultado = new int[matrizA.length][matrizB[0].length];
 			matrizResultado = mMatrizes.multiplicar(matrizA, matrizB);
 			mArquivos.escreverArquivo(matrizResultado, tempo);
-
 		}
 	}
 }
