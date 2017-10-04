@@ -25,7 +25,7 @@ public class Tempo {
 	}
 	
 	public long getTempTotal(){
-		return (this.tempoFinal - this.tempoInicial)/1000;
+		return (this.tempoFinal - this.tempoInicial)/1000000;
 	}
 	
 
