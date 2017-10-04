@@ -38,9 +38,8 @@ public class ManipuladorMatrizes {
 
 			String linhaDoArquivo = arquivoSendoLido.readLine();
 
-			int linhaMatrizA = Integer.parseInt(linhaDoArquivo.substring(0, 1));
-			int colunaMatrizA = Integer.parseInt(linhaDoArquivo.substring(2));
-
+			int linhaMatrizA = Integer.parseInt(linhaDoArquivo.split(" ")[0]);
+			int colunaMatrizA = Integer.parseInt(linhaDoArquivo.split(" ")[1]);
 			int[][] matrizA = new int[linhaMatrizA][colunaMatrizA];
 
 			for (int i = 0; i < matrizA.length; i++) {
@@ -62,12 +61,12 @@ public class ManipuladorMatrizes {
 			matrizResultado = new int[matriz.length][matriz[0].length];
 		}
 
-		for (int i = 0; i < matriz.length; i++) {
-			if (i >= posicao.start && i <= posicao.end) {
+		for (int i = posicao.start; i <= posicao.end; i++) {
+			//if (i >= posicao.start && i <= posicao.end) {
 				for (int j = 0; j < matriz[0].length; j++) {
 					this.matrizResultado[i][j] = matA[i][j];
 				}
-			}
+			//}
 		}
 	}
 

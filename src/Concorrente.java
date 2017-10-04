@@ -15,10 +15,6 @@ public class Concorrente {
 		ManipuladorArquivos mArquivos = new ManipuladorArquivos(diretorio);
 		ManipuladorMatrizes mMatrizes = new ManipuladorMatrizes();
 
-		System.out.println(args[0]);
-		System.out.println(args[1]);
-		
-		
 		if (args.length != 2 || Character.isLetter(args[0].charAt(0)) || Character.isLetter(args[1].charAt(0))) {
 			throw new Error("Entrada invalida, e necessario dois valores numericos");
 		}
@@ -46,11 +42,11 @@ public class Concorrente {
 			int ultimaPosicao = 0;
 			int contadorThreads = 0;
 			int finalPosicao = 0;
-			
+
 			while (contadorThreads != qtdThreads) {
 
 				contadorLinhas++;
-				if ((contadorLinhas == qtdLinhasPorThreads)) {
+				if (contadorLinhas == qtdLinhasPorThreads) {
 					contadorThreads++;
 					PosicaoPorThread addPosicao = new PosicaoPorThread();
 					addPosicao.setStart(ultimaPosicao);
@@ -69,7 +65,6 @@ public class Concorrente {
 					addThread.setPosicao(addPosicao);
 
 					hashPosicaoThread.put(addPosicao, addThread);
-					System.out.println("Thread para posicao " + addPosicao.start + " At� posicao " + addPosicao.end);
 
 					ultimaPosicao = finalPosicao + 1;
 					contadorLinhas = 0;
@@ -91,7 +86,6 @@ public class Concorrente {
 				mMatrizes.juntarMatrizesPorPosicao(mat, key, matrizA);
 			}
 
-			mMatrizes.imprimeMatriz(mMatrizes.getMatrizResultado());
 			mArquivos.escreverArquivo(mMatrizes.getMatrizResultado(), tempo);
 
 		} else {

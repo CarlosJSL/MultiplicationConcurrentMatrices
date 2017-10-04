@@ -29,10 +29,11 @@ public class ManipuladorArquivos {
 				}
 				writer.write("\n");
 			}
-			writer.write("Tempo Inicial: " + tempoTotal.tempoInicial + "\n");
+			//writer.write("Tempo Inicial: " + tempoTotal.tempoInicial + "\n");
 			tempoTotal.tempoFinal = System.nanoTime();
-			writer.write("Tempo Final: " + tempoTotal.tempoFinal + "\n");
+			//writer.write("Tempo Final: " + tempoTotal.tempoFinal + "\n");
 			writer.write("Tempo Total: " + tempoTotal.getTempTotal() + "\n");
+			System.out.println(tempoTotal.getTempTotal()+"ms");
 			writer.close();
 		} catch (IOException e) {
 			e.printStackTrace();

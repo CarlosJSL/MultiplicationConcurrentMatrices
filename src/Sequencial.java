@@ -5,13 +5,11 @@ public class Sequencial {
 	public static void main(String[] args) {
 		Tempo tempo = new Tempo();
 		tempo.tempoInicial = System.nanoTime();
-
 		File directory = new File("");
 		final String diretorio = directory.getAbsolutePath().toString();
 
 		ManipuladorArquivos mArquivos = new ManipuladorArquivos(diretorio);
 		ManipuladorMatrizes mMatrizes = new ManipuladorMatrizes();
-		
 
 		String nomeDoArquivoDaPrimeiraMatriz = diretorio + "/A" + args[0] + "x" + args[0] + ".txt";
 		String nomeDoArquivoDaSegundaMatriz = diretorio + "/B" + args[0] + "x" + args[0] + ".txt";
@@ -25,7 +23,7 @@ public class Sequencial {
 			int[][] matrizResultado = new int[matrizA.length][matrizB[0].length];
 			matrizResultado = mMatrizes.multiplicar(matrizA, matrizB);
 			mArquivos.escreverArquivo(matrizResultado, tempo);
-			mMatrizes.imprimeMatriz(matrizResultado);
+
 		}
 	}
 }

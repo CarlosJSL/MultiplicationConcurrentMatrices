@@ -96,33 +96,18 @@ public class ManipuladorMatrizesThread extends Thread {
 		this.matResultado = new int[linA][colB];
 		int soma = 0;
 
-		for (int i = 0; i < linA; i++) {
-			if (i >= posicao.start && i <= posicao.end) {
-				for (int j = 0; j < colB; j++) {
-					for (int x = 0; x < colA; x++) {
-						soma += matA[i][x] * matB[x][j];
-					}
-					this.matResultado[i][j] = soma;
-					soma = 0;
+		for (int i = posicao.start; i <= posicao.end; i++) {
+			//if (i >= posicao.start && i <= posicao.end) {
+			for (int j = 0; j < colB; j++) {
+				for (int x = 0; x < colA; x++) {
+					soma += matA[i][x] * matB[x][j];
 				}
+				this.matResultado[i][j] = soma;
+				soma = 0;
 			}
+			//}
 		}
 
 	}
-
-	/*public int[][] juntarMatrizes(int[][] matPar, int[][] matImpar, int lin, int col) {
-		int[][] matResultadoFinal = new int[lin][col];
-		for (int i = 0; i < lin; i++) {
-			for (int j = 0; j < col; j++) {
-				if (i == 0 || i % 2 == 0) {
-					matResultadoFinal[i][j] = matPar[i][j];
-				} else {
-					matResultadoFinal[i][j] = matImpar[i][j];
-				}
-			}
-		}
-
-		return matResultadoFinal;
-	}*/
 
 }
