@@ -1,4 +1,9 @@
-
+/**
+ * Classe main responsavel por executar
+ * o codigo da multiplicação de matrizes 
+ * na forma sequencial
+ *
+ */
 public class MainSequencial {
 
 	public static void main(String[] args) {

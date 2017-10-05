@@ -4,6 +4,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 
+/**
+ * Classe responsavel por fazer a manipulação dos arquivos txt
+ * 
+ */
 public class ManipuladorArquivos {
 
 	String baseDir;
@@ -12,6 +16,13 @@ public class ManipuladorArquivos {
 		this.baseDir = diretorio + "/";
 	}
 
+	/**
+	 * Metodo responsavel por gravar informações de uma matriz em um arquivo txt
+	 * 
+	 * @param mat  matriz que será gravada no arquivo txt
+	 * @param tempoTotal tempo necessario para realizar a multiplicação de matrizes e
+	 *                   gravar em um arquivo txt
+	 */
 	public void escreverArquivo(int[][] mat, Tempo tempoTotal) {
 		String nomeArquivo = "C" + mat.length + "x" + mat[0].length + ".txt";
 
@@ -29,11 +40,9 @@ public class ManipuladorArquivos {
 				}
 				writer.write("\n");
 			}
-			//writer.write("Tempo Inicial: " + tempoTotal.tempoInicial + "\n");
 			tempoTotal.tempoFinal = System.nanoTime();
-			//writer.write("Tempo Final: " + tempoTotal.tempoFinal + "\n");
 			writer.write("Tempo Total: " + tempoTotal.getTempTotal() + "\n");
-			System.out.println(tempoTotal.getTempTotal()+"ms");
+			System.out.println(tempoTotal.getTempTotal() + "ms");
 			writer.close();
 		} catch (IOException e) {
 			e.printStackTrace();

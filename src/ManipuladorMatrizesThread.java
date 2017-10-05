@@ -95,7 +95,6 @@ public class ManipuladorMatrizesThread extends Thread {
 		int soma = 0;
 
 		for (int i = posicao.inicio; i <= posicao.fim; i++) {
-			//if (i >= posicao.start && i <= posicao.end) {
 			for (int j = 0; j < colB; j++) {
 				for (int x = 0; x < colA; x++) {
 					soma += matA[i][x] * matB[x][j];
@@ -103,11 +102,6 @@ public class ManipuladorMatrizesThread extends Thread {
 				this.matResultado[i][j] = soma;
 				soma = 0;
 			}
-			//}
 		}
-
 	}
-	
-	
-
 }

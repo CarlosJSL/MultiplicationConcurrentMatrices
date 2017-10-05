@@ -2,10 +2,25 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
+/**
+ * Classe responsavel por executar metodos relativos a matriz como por exemplo
+ * multiplicação,impressao e preenchimento
+ *
+ */
 public class ManipuladorMatrizes {
 
 	int[][] matrizResultado;
 
+	/**
+	 * Realiza a multiplicação de duas matrizes
+	 * 
+	 * @param matA
+	 *            - primeira matriz da multiplicação
+	 * @param matB
+	 *            - segunda matriz da multiplicação
+	 * 
+	 * @return matriz resultante da multiplicação
+	 */
 	public int[][] multiplicar(int[][] matA, int[][] matB) {
 
 		int[][] matC = new int[matA.length][matB[0].length];
@@ -22,6 +37,13 @@ public class ManipuladorMatrizes {
 		return matC;
 	}
 
+	/**
+	 * Realiza a impressao de uma matriz qualquer
+	 * 
+	 * @param matrizImprimir
+	 *            - matriz a ter seus valores impressos
+	 * 
+	 */
 	public void imprimeMatriz(int[][] matrizImprimir) {
 		for (int i = 0; i < matrizImprimir.length; i++) {
 			for (int j = 0; j < matrizImprimir[0].length; j++) {
@@ -30,6 +52,16 @@ public class ManipuladorMatrizes {
 		}
 	}
 
+	/**
+	 * Cria uma matriz e associa a ela valores existens em um arquivo txt
+	 * 
+	 * @param nomeDoArquivoASerLido
+	 *            - nome do arquivo que conterá os valores a serem alocados em
+	 *            uma determinada matriz
+	 * 
+	 * @return retona uma matriz preenchida com os valores que estavam em um
+	 *         arquivo txt
+	 */
 	public int[][] CriarEPreencherMatriz(String nomeDoArquivoASerLido) {
 		String[] valores;
 		try {
@@ -62,18 +94,18 @@ public class ManipuladorMatrizes {
 		}
 
 		for (int i = posicao.inicio; i <= posicao.fim; i++) {
-			//if (i >= posicao.start && i <= posicao.end) {
-				for (int j = 0; j < matriz[0].length; j++) {
-					this.matrizResultado[i][j] = matA[i][j];
-				}
-			//}
+			for (int j = 0; j < matriz[0].length; j++) {
+				this.matrizResultado[i][j] = matA[i][j];
+			}
 		}
 	}
-
+	
+	/**
+	 * Retorna a matriz resultante de uma multiplicação
+	 * 
+	 * @return retona uma matriz resultante de uma multiplicação
+	 */
 	public int[][] getMatrizResultado() {
 		return matrizResultado;
 	}
-	
-	
-
 }

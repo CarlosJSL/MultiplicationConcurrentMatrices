@@ -1,8 +1,24 @@
 import java.io.File;
 import java.util.Hashtable;
 
+/**
+ * Classe responsavel por conter o metodo
+ * que realiza a multiplicação de matrizes quadradas	
+ * no formato concorrente
+ * 
+ */
 public class Concorrente {
-
+	
+	/**
+     * Metodo principal que se encarregará
+     * de prover todos os recursos necessarios
+     * para a multiplicação de matrizes no formato
+     * concorrente 
+     *
+     * @param args Parametro passado pelo usuario no terminal
+     * * @param tempo variavel que ficará encarregada de calcular o tempo
+     * 				  total da execução
+     */
 	public void executar(String[] args, Tempo tempo) {
 
 		File directory = new File("");
