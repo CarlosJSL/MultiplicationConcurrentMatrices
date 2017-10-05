@@ -58,7 +58,7 @@ public class Concorrente {
 
 			for (IntervaloLinhas key : hashIntervaloThread.keySet()) {
 				int[][] mat = hashIntervaloThread.get(key).getMatResultado();
-				mMatrizes.juntarMatrizesPorIntervalo(mat, key, matrizA);
+				mMatrizes.juntarMatrizesPorIntervalo(mat, key, matrizA.length, matrizB[0].length);
 			}
 
 			mArquivos.escreverArquivo(mMatrizes.getMatrizResultado(), tempo);
@@ -68,6 +68,21 @@ public class Concorrente {
 		}
 	}
 
+	/**
+	 * Criação da HashTable tendo sua chave o intervalo de posições, e seu valor a Thread
+	 * 
+	 * @param qtdThreads
+	 * 				- Quantidade de Threads solicitado pelo usuário que não poderá ser maior que a Quantidade de Linhas
+	 * @param matrizA
+	 * 				- Matriz A para multiplicação
+	 * @param matrizB
+	 * 				- Matriz B para multiplicação
+	 * @param qtdLinhasPorThreads
+	 * 				- Quantidade de linhas por Thread, valor entre Linhas/qtdThreads
+	 * @param resto
+	 * 				- Resto da divisão quando ela não é exata
+	 * @return
+	 */
 	private static Hashtable<IntervaloLinhas, ManipuladorMatrizesThread> criarHasthTableThread(int qtdThreads,
 			int[][] matrizA, int[][] matrizB, int qtdLinhasPorThreads, int resto) {
 		Hashtable<IntervaloLinhas, ManipuladorMatrizesThread> hashIntervaloThread = new Hashtable<IntervaloLinhas, ManipuladorMatrizesThread>();
@@ -97,6 +112,23 @@ public class Concorrente {
 		return hashIntervaloThread;
 	}
 
+	/**
+	 * Método responsável por criar os intervalos de posição que a thread poderá trabalhar
+	 * atentando que a última Thread sempre terá mais trabalho pois ficará com o resto da divisão 
+	 * quando não for possível dividir igualmente
+	 * 
+	 * @param qtdThreads
+	 * 				- Quantidade de Threads solicitada pelo usuários
+	 * @param resto
+	 * 				- Resto da divisão, quando a divisão de Linhas pela quantidade de Threads não for exata
+	 * @param ultimaPosicao
+	 * 				- Ultima posição + 1 que foi utilizada para a thread anterior
+	 * @param contadorThreads
+	 * 				- Contador controle das Threads que irá confirmar se já é a última Thread que deverá ser gerada.
+	 * @param finalPosicao
+	 * 				- Posição final que a Thread poderá trabalhar 
+	 * @return objeto com o Intervalo de posição de Linhas.
+	 */
 	private static IntervaloLinhas criarIntervaloLinhas(int qtdThreads, int resto, int ultimaPosicao,
 			int contadorThreads, int finalPosicao) {
 		IntervaloLinhas intervaloLinhas = new IntervaloLinhas();

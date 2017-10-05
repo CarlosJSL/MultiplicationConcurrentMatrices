@@ -88,13 +88,26 @@ public class ManipuladorMatrizes {
 		return null;
 	}
 
-	public void juntarMatrizesPorIntervalo(int[][] matA, IntervaloLinhas posicao, int[][] matriz) {
+	/**
+	 * Juntar as matrizes resultados da multiplicação, uma vez que cada Thread escreve apenas
+	 * em uma parte da matriz, aqui ela está tendo seus resultados unidos.
+	 * @param matA
+	 *             - Matriz resultado da multiplicação
+	 * @param posicao
+	 *             - Range das posição que tem os resultados validos
+	 * @param linha
+	 *             - Quantidade de Linhas da matriz resultado
+	 * @param coluna
+	 *             - Quantidade de Colunas da matriz resutlado
+	 */
+	public void juntarMatrizesPorIntervalo(int[][] matA, IntervaloLinhas posicao, int linha, int coluna) {
 		if (this.matrizResultado == null) {
-			matrizResultado = new int[matriz.length][matriz[0].length];
+			
+			matrizResultado = new int[linha][coluna];
 		}
 
 		for (int i = posicao.inicio; i <= posicao.fim; i++) {
-			for (int j = 0; j < matriz[0].length; j++) {
+			for (int j = 0; j < matrizResultado[0].length; j++) {
 				this.matrizResultado[i][j] = matA[i][j];
 			}
 		}

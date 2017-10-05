@@ -1,4 +1,8 @@
-
+/**
+ * Classe responsável por criar a Thread e guardar o resultao de sua multiplicação.
+ * 
+ *
+ */
 public class ManipuladorMatrizesThread extends Thread {
 
 	protected int[][] matResultado;
@@ -11,74 +15,140 @@ public class ManipuladorMatrizesThread extends Thread {
 	protected IntervaloLinhas posicao;
 	protected boolean par;
 
+	/**
+	 * Retorna a Matriz A 
+	 * @return Matriz A
+	 */
 	public int[][] getMatA() {
 		return matA;
 	}
 
+	/**
+	 * Altera o valor da Matriz A 
+	 * @param matA nova matriz a ser atribuida
+	 */
 	public void setMatA(int[][] matA) {
 		this.matA = matA;
 	}
 
+	/**
+	 * Retorna o valor da Matriz B
+	 * @return Matriz B
+	 */
 	public int[][] getMatB() {
 		return matB;
 	}
 
+	/**
+	 * Altera o valo da Matriz B
+	 * @param matB
+	 */
 	public void setMatB(int[][] matB) {
 		this.matB = matB;
 	}
 
+	/**
+	 * Retorna a quantidade de colunas da Matriz A
+	 * @return Quantidade de colunas da Matriz A
+	 */
 	public int getColA() {
 		return colA;
 	}
 
+	/**
+	 * Altera o valor de colA, quantidade de colunas da Matriz A
+	 * @param colA
+	 */
 	public void setColA(int colA) {
 		this.colA = colA;
 	}
 
+	/**
+	 * Retorna a quantidade de Linhas da Matriz A
+	 * @return Quantidade de linhas da Matriz A
+	 */
 	public int getLinA() {
 		return linA;
 	}
 
+	/**
+	 * Altera o valor da quantidade de linhas da Matriz A
+	 * @param linA
+	 */
 	public void setLinA(int linA) {
 		this.linA = linA;
 	}
 
+	/**
+	 * Retorna a quantidade de Colunas da Matriz B
+	 * @return Quantidade de colunas da Matriz B
+	 */
 	public int getColB() {
 		return colB;
 	}
 
+	/**
+	 * Altera o valor da quantidade de Colunas da Matriz B
+	 * @param linA
+	 */
 	public void setColB(int colB) {
 		this.colB = colB;
 	}
 
+	/**
+	 * Retorna a quantidade de Linhas da Matriz B
+	 * @return Quantidade de linhas da Matriz B
+	 */
 	public int getLinB() {
 		return linB;
 	}
 
+	/**
+	 * Altera o valor da quantidade de linhas da Matriz B
+	 * @param linB
+	 */
 	public void setLinB(int linB) {
 		this.linB = linB;
 	}
 
+	/**
+	 * Retorna a Matriz resultante, tendo apenas valores validos nas linhas que foram multiplicadas
+	 *  
+	 * @return retorna a Matriz Resultado
+	 */
 	public int[][] getMatResultado() {
 		return matResultado;
 	}
 
+	/**
+	 * Altera o valor da matriz resultado
+	 * @param matResultado
+	 */
 	public void setMatResultado(int[][] matResultado) {
 		this.matResultado = matResultado;
 	}
 
+	/**
+	 * Retorna o objeto responsável por guardar o intervalo que a Thread poderá trabalhar.
+	 * @return 
+	 */
 	public IntervaloLinhas getPosicao() {
 		return posicao;
 	}
 
+	/**
+	 * Altera o valor do objeto responsável por guardar o intervalo que a Thread poderá trabalhar
+	 */
 	public void setPosicao(IntervaloLinhas posicao) {
 		this.posicao = posicao;
 	}
 
+	
 	public ManipuladorMatrizesThread() {
 
 	}
 
+	
 	public ManipuladorMatrizesThread(int[][] matA, int[][] matB, IntervaloLinhas pos) {
 		this.matA = matA;
 		this.matB = matB;
@@ -89,8 +159,18 @@ public class ManipuladorMatrizesThread extends Thread {
 		this.posicao = pos;
 	}
 
+	/**
+	 * Método executado pela Thread quando é "startada"
+	 */
 	@Override
 	public void run() {
+		multiplicar();
+	}
+
+	/**
+	 * Método responsável por realizar a multiplicação da matriz.
+	 */
+	private void multiplicar() {
 		this.matResultado = new int[linA][colB];
 		int soma = 0;
 
