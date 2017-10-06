@@ -16,8 +16,7 @@ public class Concorrente {
      * concorrente 
      *
      * @param args Parametro passado pelo usuario no terminal
-     * * @param tempo variavel que ficarÃ¡ encarregada de calcular o tempo
-     * 				  total da execuÃ§Ã£o
+     * @param tempo variavel que ficarÃ¡ encarregada de calcular o tempo total da execuÃ§Ã£o
      */
 	public void executar(String[] args, Tempo tempo) {
 
@@ -69,19 +68,19 @@ public class Concorrente {
 	}
 
 	/**
-	 * Criação da HashTable tendo sua chave o intervalo de posições, e seu valor a Thread
+	 * Criaï¿½ï¿½o da HashTable tendo sua chave o intervalo de posiï¿½ï¿½es, e seu valor a Thread
 	 * 
 	 * @param qtdThreads
-	 * 				- Quantidade de Threads solicitado pelo usuário que não poderá ser maior que a Quantidade de Linhas
+	 * 				- Quantidade de Threads solicitado pelo usuï¿½rio que nï¿½o poderï¿½ ser maior que a Quantidade de Linhas
 	 * @param matrizA
-	 * 				- Matriz A para multiplicação
+	 * 				- Matriz A para multiplicaï¿½ï¿½o
 	 * @param matrizB
-	 * 				- Matriz B para multiplicação
+	 * 				- Matriz B para multiplicaï¿½ï¿½o
 	 * @param qtdLinhasPorThreads
 	 * 				- Quantidade de linhas por Thread, valor entre Linhas/qtdThreads
 	 * @param resto
-	 * 				- Resto da divisão quando ela não é exata
-	 * @return
+	 * 				- Resto da divisï¿½o quando ela nï¿½o ï¿½ exata 
+	 * @return table hash contendo as threads e respectivas linhas
 	 */
 	private static Hashtable<IntervaloLinhas, ManipuladorMatrizesThread> criarHasthTableThread(int qtdThreads,
 			int[][] matrizA, int[][] matrizB, int qtdLinhasPorThreads, int resto) {
@@ -113,21 +112,21 @@ public class Concorrente {
 	}
 
 	/**
-	 * Método responsável por criar os intervalos de posição que a thread poderá trabalhar
-	 * atentando que a última Thread sempre terá mais trabalho pois ficará com o resto da divisão 
-	 * quando não for possível dividir igualmente
+	 * Mï¿½todo responsï¿½vel por criar os intervalos de posiï¿½ï¿½o que a thread poderï¿½ trabalhar
+	 * atentando que a ï¿½ltima Thread sempre terï¿½ mais trabalho pois ficarï¿½ com o resto da divisï¿½o 
+	 * quando nï¿½o for possï¿½vel dividir igualmente
 	 * 
 	 * @param qtdThreads
-	 * 				- Quantidade de Threads solicitada pelo usuários
+	 * 				- Quantidade de Threads solicitada pelo usuï¿½rios
 	 * @param resto
-	 * 				- Resto da divisão, quando a divisão de Linhas pela quantidade de Threads não for exata
+	 * 				- Resto da divisï¿½o, quando a divisï¿½o de Linhas pela quantidade de Threads nï¿½o for exata
 	 * @param ultimaPosicao
-	 * 				- Ultima posição + 1 que foi utilizada para a thread anterior
+	 * 				- Ultima posiï¿½ï¿½o + 1 que foi utilizada para a thread anterior
 	 * @param contadorThreads
-	 * 				- Contador controle das Threads que irá confirmar se já é a última Thread que deverá ser gerada.
+	 * 				- Contador controle das Threads que irï¿½ confirmar se jï¿½ ï¿½ a ï¿½ltima Thread que deverï¿½ ser gerada.
 	 * @param finalPosicao
-	 * 				- Posição final que a Thread poderá trabalhar 
-	 * @return objeto com o Intervalo de posição de Linhas.
+	 * 				- Posiï¿½ï¿½o final que a Thread poderï¿½ trabalhar 
+	 * @return objeto com o Intervalo de posiï¿½ï¿½o de Linhas.
 	 */
 	private static IntervaloLinhas criarIntervaloLinhas(int qtdThreads, int resto, int ultimaPosicao,
 			int contadorThreads, int finalPosicao) {

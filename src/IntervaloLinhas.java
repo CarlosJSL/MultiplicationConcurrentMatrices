@@ -1,7 +1,7 @@
 /**
- * Classe responsavel por conter a posição inicial e final 
- * que será usado pelo método de Concorrente para realizar
- * como limite para realizar suas multiplicações
+ * Classe responsavel por conter a posiï¿½ï¿½o inicial e final 
+ * que serï¿½ usado pelo mï¿½todo de Concorrente para realizar
+ * como limite para realizar suas multiplicaï¿½ï¿½es
  * 
  */
 public class IntervaloLinhas {
@@ -19,18 +19,18 @@ public class IntervaloLinhas {
 	}
 
 	/**
-	 * Retorna a posição inicial
+	 * Retorna a posicao inicial
 	 * 
-	 * @return a posição incial em Inteiro
+	 * @return a posicao incial em Inteiro
 	 */
 	public int getInicio() {
 		return inicio;
 	}
 
 	/**
-	 * Altera a posição Inicial
+	 * Altera a posicao Inicial
 	 * 
-	 * @params inicio nova posição a ser atribuida
+	 * @param inicio nova posicao a ser atribuida
 	 */
 	public void setInicio(int inicio) {
 		this.inicio = inicio;
@@ -39,16 +39,16 @@ public class IntervaloLinhas {
 	/**
 	 * Retorna a posicao final
 	 * 
-	 * @return a posicação final em Inteiro
+	 * @return a posicacao final em Inteiro
 	 */
 	public int getFim() {
 		return fim;
 	}
 
 	/**
-	 * Altera a posição final 
+	 * Altera a posicao final 
 	 * 
-	 * @param fim nova posição que será atribida
+	 * @param fim nova posiaco que sera atribida
 	 */
 	public void setFim(int fim) {
 		this.fim = fim;

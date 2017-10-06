@@ -1,5 +1,5 @@
 /**
- * Classe responsável por criar a Thread e guardar o resultao de sua multiplicação.
+ * Classe responsï¿½vel por criar a Thread e guardar o resultao de sua multiplicaï¿½ï¿½o.
  * 
  *
  */
@@ -14,7 +14,23 @@ public class ManipuladorMatrizesThread extends Thread {
 	protected int linB;
 	protected IntervaloLinhas posicao;
 	protected boolean par;
+	
+	
+	public ManipuladorMatrizesThread() {
 
+	}
+
+	
+	public ManipuladorMatrizesThread(int[][] matA, int[][] matB, IntervaloLinhas pos) {
+		this.matA = matA;
+		this.matB = matB;
+		this.colA = matA[0].length;
+		this.linA = matA.length;
+		this.colB = matB[0].length;
+		this.linB = matB.length;
+		this.posicao = pos;
+	}
+	
 	/**
 	 * Retorna a Matriz A 
 	 * @return Matriz A
@@ -89,7 +105,7 @@ public class ManipuladorMatrizesThread extends Thread {
 
 	/**
 	 * Altera o valor da quantidade de Colunas da Matriz B
-	 * @param linA
+	 * @param colB 
 	 */
 	public void setColB(int colB) {
 		this.colB = colB;
@@ -129,7 +145,7 @@ public class ManipuladorMatrizesThread extends Thread {
 	}
 
 	/**
-	 * Retorna o objeto responsável por guardar o intervalo que a Thread poderá trabalhar.
+	 * Retorna o objeto responsï¿½vel por guardar o intervalo que a Thread poderï¿½ trabalhar.
 	 * @return 
 	 */
 	public IntervaloLinhas getPosicao() {
@@ -137,30 +153,15 @@ public class ManipuladorMatrizesThread extends Thread {
 	}
 
 	/**
-	 * Altera o valor do objeto responsável por guardar o intervalo que a Thread poderá trabalhar
+	 * Altera o valor do objeto responsï¿½vel por guardar o intervalo que a Thread poderï¿½ trabalhar
+	 * @param  posicao  - nova posicao da thread
 	 */
 	public void setPosicao(IntervaloLinhas posicao) {
 		this.posicao = posicao;
 	}
 
-	
-	public ManipuladorMatrizesThread() {
-
-	}
-
-	
-	public ManipuladorMatrizesThread(int[][] matA, int[][] matB, IntervaloLinhas pos) {
-		this.matA = matA;
-		this.matB = matB;
-		this.colA = matA[0].length;
-		this.linA = matA.length;
-		this.colB = matB[0].length;
-		this.linB = matB.length;
-		this.posicao = pos;
-	}
-
 	/**
-	 * Método executado pela Thread quando é "startada"
+	 * Mï¿½todo executado pela Thread quando ï¿½ "startada"
 	 */
 	@Override
 	public void run() {
@@ -168,7 +169,7 @@ public class ManipuladorMatrizesThread extends Thread {
 	}
 
 	/**
-	 * Método responsável por realizar a multiplicação da matriz.
+	 * Mï¿½todo responsï¿½vel por realizar a multiplicaï¿½ï¿½o da matriz.
 	 */
 	private void multiplicar() {
 		this.matResultado = new int[linA][colB];

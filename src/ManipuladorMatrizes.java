@@ -89,12 +89,12 @@ public class ManipuladorMatrizes {
 	}
 
 	/**
-	 * Juntar as matrizes resultados da multiplicação, uma vez que cada Thread escreve apenas
-	 * em uma parte da matriz, aqui ela está tendo seus resultados unidos.
+	 * Juntar as matrizes resultados da multiplicacao, uma vez que cada Thread escreve apenas
+	 * em uma parte da matriz, aqui ela estï¿½ tendo seus resultados unidos.
 	 * @param matA
-	 *             - Matriz resultado da multiplicação
+	 *             - Matriz resultado da multiplicacao
 	 * @param posicao
-	 *             - Range das posição que tem os resultados validos
+	 *             - Range das posicao que tem os resultados validos
 	 * @param linha
 	 *             - Quantidade de Linhas da matriz resultado
 	 * @param coluna

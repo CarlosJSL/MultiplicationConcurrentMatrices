@@ -19,7 +19,7 @@ public class Tempo {
 	/**
 	 * Altera o tempo inicial da execução da multiplicação
 	 * 
-	 * @params tempoInicial novo tempo a ser atribuido
+	 * @param tempoInicial novo tempo a ser atribuido
 	 */
 	public void setTempoInicial(long tempoInicial) {
 		this.tempoInicial = tempoInicial;
@@ -37,7 +37,7 @@ public class Tempo {
 	/**
 	 * Altera o tempo final da execução da multiplicação
 	 * 
-	 * @params tempoFinal novo tempo a ser atribuido
+	 * @param tempoFinal novo tempo a ser atribuido
 	 */
 	public void setTempoFinal(long tempoFinal) {
 		this.tempoFinal = tempoFinal;
